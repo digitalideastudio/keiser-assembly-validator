@@ -4,6 +4,10 @@ import Vue from 'vue'
 import App from './App';
 
 require('sweetalert');
+require('bootstrap-4');
+require('bootstrap/dist/css/bootstrap.min.css');
+require('font-awesome/css/font-awesome.min.css');
+require('sweetalert/dist/sweetalert.css');
 
 Vue.config.productionTip = false;
 
