@@ -126,6 +126,7 @@
             enterPartModel(index) {
                 const foundPart = this.parts.find(p => p.id === this.partModels[index]);
                 const fpIndex = this.parts.indexOf(foundPart);
+
                 if (fpIndex !== -1) {
                     this.parts.splice(fpIndex, 1);
                 }
@@ -138,11 +139,9 @@
                         const nextPart = document.querySelector(`#part-model-input${index + 1}`);
 
                         if (this.parts.length === 0 && Object.values(this.partScanned).every(k => k)) {
-                            if (Object.values(this.partModels).sort().join(',') === Object.values(this.partsToDisplay.map(p => p.id)).sort().join(',')) {
-                                this.triggerSuccess();
-                            } else {
-                                this.triggerFailure();
-                            }
+                            // if (Object.values(this.partModels).sort().join(',') === Object.values(this.partsToDisplay.map(p => p.id)).sort().join(',')) {
+                            this.triggerSuccess();
+                            // }
                         } else if (nextPart) {
                             nextPart.select();
                         }
@@ -151,8 +150,13 @@
                     return;
                 }
 
+                const foundDisplayPart = this.partsToDisplay.find(p => p.id === this.partModels[index]);
+                if (foundDisplayPart) {
+                    this.triggerFailure('Duplicate detected', 'This part has been already scanned!', 2000);
+                } else {
+                    this.triggerFailure();
+                }
                 this.$set(this.partErrors, index, true);
-                this.$refs.audioE.play();
                 document.querySelector(`#part-model-input${index}`).select();
             },
             resetPartModel(index) {
@@ -186,12 +190,12 @@
                     }
                 }, 3000);
             },
-            triggerFailure() {
+            triggerFailure(title = 'Whoops', text = 'Wrong assembly!', timer = 3000) {
                 swal({
-                    title: 'Whoops',
+                    title,
                     type: 'error',
-                    text: 'Wrong assembly!',
-                    timer: 3000,
+                    text,
+                    timer,
                     showConfirmButton: false,
                 });
                 this.$refs.audioE.play();
