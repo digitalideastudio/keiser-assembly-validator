@@ -101,8 +101,8 @@
 
                 if (this.foundProduct) {
                     this.error = false;
-                    this.parts = this.foundProduct.parts;
-                    this.partsToDisplay = this.foundProduct.parts.slice(0);
+                    this.parts = this.foundProduct.parts.slice(0);
+                    this.partsToDisplay = this.foundProduct.parts;
 
                     this.$nextTick(() => {
                         document.querySelector('#part-model-input0').select();
@@ -171,6 +171,7 @@
                 this.partModels = {};
                 this.partScanned = {};
                 this.partDescription = {};
+                this.parts = this.foundProduct.parts.slice(0);
             },
             triggerSuccess() {
                 swal({
