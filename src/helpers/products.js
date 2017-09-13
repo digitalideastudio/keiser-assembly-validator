@@ -25,26 +25,26 @@ const products = [
         ]
     },
     {
-        model: '005506BBC',
+        model: 'ABC222',
         parts: [
             {
-                id: '555003',
+                id: '111',
                 description: 'Flywheel',
             },
             {
-                id: '550814',
+                id: '222',
                 description: 'Framebase',
             },
             {
-                id: '550844',
+                id: '333',
                 description: 'Handlebar',
             },
             {
-                id: '555017',
-                description: 'Computer',
+                id: '333',
+                description: 'Handlebar',
             },
             {
-                id: '555016',
+                id: '444',
                 description: 'Pedal',
             },
         ],
