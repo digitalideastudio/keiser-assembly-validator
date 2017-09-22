@@ -38,28 +38,13 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="(part, index) in partsToDisplay">
-                                    <th scope="row">{{ index + 1 }}</th>
+                                <tr v-for="(part, index) in assembly.parts" :index="part.id">
+                                    <th scope="row" v-text="index + 1"></th>
+                                    <th scope="row" v-text="part.id"></th>
                                     <td class="text-center">
-                                        <div class="input-group input-group-sm">
-                                            <input type="text"
-                                                   :readonly="partScanned[index]"
-                                                   :id="`part-model-input${index}`"
-                                                   :class="{ 'is-invalid': partErrors[index], 'is-valid': partErrors[index] }"
-                                                   class="form-control"
-                                                   placeholder="Part Model"
-                                                   aria-label="Part Model"
-                                                   v-model="partModels[index]"
-                                                   @keypress.enter="enterPartModel(index)"
-                                                   @keydown.esc="resetPartModel(index)">
-                                            <span class="input-group-addon" @click="resetPartModel(index)"
-                                                  v-show="partModels[index]">
-                                                <i class="fa fa-times" v-show="!partScanned[index]"></i>
-                                                <i class="fa fa-check text-success" v-show="partScanned[index]"></i>
-                                            </span>
-                                        </div>
+                                        <part :part="part"></part>
                                     </td>
-                                    <td class="text-center" v-text="partDescription[index]"></td>
+                                    <td class="text-center" v-text="part.description"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -75,34 +60,34 @@
     // ES6 Modules or TypeScript
     import swal from 'sweetalert'
     import products from './helpers/products';
+    import { triggerFailure, triggerSuccess } from './helpers/util';
+    import Part from './components/Part.vue';
 
     export default {
         name: 'app',
+        components: {
+            Part,
+        },
         data() {
             return {
-                products,
-                foundProduct: {},
+                assembly: {},
                 scanned: false,
                 barcode: '',
-                partsToDisplay: [],
-                parts: [],
                 error: false,
+
                 partModels: [],
-                partDescription: {},
                 partScanned: {},
-                partErrors: {},
             };
         },
         methods: {
             enterBarcode() {
                 this.scanned = true;
 
-                this.foundProduct = products.find(p => p.model === this.barcode);
+                this.assembly = products.find(p => p.model === this.barcode);
 
-                if (this.foundProduct) {
+                if (this.assembly) {
                     this.error = false;
-                    this.parts = this.foundProduct.parts.slice(0);
-                    this.partsToDisplay = this.foundProduct.parts;
+                    // this.parts = this.assembly.parts.slice(0);
 
                     this.$nextTick(() => {
                         document.querySelector('#part-model-input0').select();
@@ -118,7 +103,6 @@
                 this.barcode = '';
                 this.scanned = false;
                 this.parts = [];
-                this.partsToDisplay = [];
                 this.$refs.barcode.select();
 
                 this.resetAllPartModel();
@@ -133,15 +117,12 @@
 
                 if (foundPart) {
                     this.$set(this.partScanned, index, true);
-                    this.$set(this.partDescription, index, foundPart.description);
                     this.$set(this.partErrors, index, false);
                     this.$nextTick(() => {
                         const nextPart = document.querySelector(`#part-model-input${index + 1}`);
 
                         if (this.parts.length === 0 && Object.values(this.partScanned).every(k => k)) {
-                            // if (Object.values(this.partModels).sort().join(',') === Object.values(this.partsToDisplay.map(p => p.id)).sort().join(',')) {
                             this.triggerSuccess();
-                            // }
                         } else if (nextPart) {
                             nextPart.select();
                         }
@@ -150,7 +131,7 @@
                     return;
                 }
 
-                const foundDisplayPart = this.partsToDisplay.find(p => p.id === this.partModels[index]);
+                const foundDisplayPart = this.product.parts.find(p => p.id === this.partModels[index]);
                 if (foundDisplayPart) {
                     this.triggerFailure('Duplicate detected', 'This part has been already scanned!', 2000);
                 } else {
@@ -163,43 +144,12 @@
                 this.$set(this.partErrors, index, false);
                 this.partModels[index] = '';
                 this.$set(this.partScanned, index, false);
-                this.$set(this.partDescription, index, '');
                 document.querySelector(`#part-model-input${index}`).select();
             },
             resetAllPartModel() {
-                this.partErrors = {};
                 this.partModels = {};
                 this.partScanned = {};
-                this.partDescription = {};
-                this.parts = this.foundProduct.parts.slice(0);
-            },
-            triggerSuccess() {
-                swal({
-                    title: 'Great job',
-                    type: 'success',
-                    text: 'All parts has been completed!',
-                    timer: 3000,
-                    showConfirmButton: false,
-                });
-                this.resetAllPartModel();
-                this.$refs.audioS.play();
-                window.setTimeout(() => {
-                    const inp = document.querySelector('#part-model-input0');
-
-                    if (inp) {
-                        inp.select();
-                    }
-                }, 3000);
-            },
-            triggerFailure(title = 'Whoops', text = 'Wrong assembly!', timer = 3000) {
-                swal({
-                    title,
-                    type: 'error',
-                    text,
-                    timer,
-                    showConfirmButton: false,
-                });
-                this.$refs.audioE.play();
+                // this.parts = this.assembly.parts.slice(0);
             },
         },
     }
