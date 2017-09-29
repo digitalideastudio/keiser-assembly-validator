@@ -3,28 +3,10 @@
         <p class="page-title">Scan product model</p>
         <div class="scanner-wrapper" v-loading="!productsLoaded"
              element-loading-text="Loading products...">
-            <model-scanner :products="product" v-if="productsLoaded"></model-scanner>
+            <model-scanner :products="products" v-if="productsLoaded" @found="setAssembly" @reset="resetAssembly"></model-scanner>
         </div>
-        <div class="col-xs-12" style="margin-top: 20px" v-show="scanned && !error">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th class="text-center">Part ID</th>
-                    <th class="text-center" style="width: 50%">Description</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="(part, index) in assembly.parts" :index="part.id">
-                    <th scope="row" v-text="index + 1"></th>
-                    <th scope="row" v-text="part.id"></th>
-                    <td class="text-center">
-                        <part :part="part"></part>
-                    </td>
-                    <td class="text-center" v-text="part.description"></td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="col-xs-12" style="margin-top: 20px" v-if="assembly.model">
+            <parts-checklist :parts="assembly.parts"></parts-checklist>
         </div>
     </div>
 </template>
@@ -34,21 +16,18 @@
     import { triggerFailure, triggerSuccess } from '../helpers/util';
     import Part from './Part';
     import ModelScanner from './ModelScanner';
+    import PartsChecklist from './PartsChecklist';
 
     const Main = {
         name      : 'main',
         components: {
             Part,
             ModelScanner,
+            PartsChecklist,
         },
         data() {
             return {
-                product : [],
-                assembly: {},
-                scanned : false,
-                barcode : '',
-                error   : false,
-
+                assembly   : {},
                 partModels : [],
                 partScanned: {},
             };
@@ -60,6 +39,12 @@
             ]),
         },
         methods: {
+            setAssembly(assembly) {
+                this.assembly = assembly;
+            },
+            resetAssembly(assembly) {
+                this.assembly = assembly;
+            },
             enterPartModel(index) {
                 const foundPart = this.parts.find(p => p.id === this.partModels[index]);
                 const fpIndex = this.parts.indexOf(foundPart);
