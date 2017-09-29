@@ -20,10 +20,10 @@
 
 <script>
     export default {
-        name: 'part',
+        name : 'part',
         props: {
             part: {
-                type: Object,
+                type    : Object,
                 required: true,
             },
         },
@@ -32,7 +32,7 @@
                 variable: 'World',
             };
         },
-    }
+    };
 </script>
 
 <style scoped>

@@ -1,9 +1,15 @@
+// import swal from 'sweetalert';
+
+function alert() {
+    // return swal;
+}
+
 function triggerSuccess() {
-    swal({
-        title: 'Great job',
-        type: 'success',
-        text: 'All parts has been completed!',
-        timer: 3000,
+    alert({
+        title            : 'Great job',
+        type             : 'success',
+        text             : 'All parts has been completed!',
+        timer            : 3000,
         showConfirmButton: false,
     });
     this.resetAllPartModel();
@@ -18,9 +24,9 @@ function triggerSuccess() {
 }
 
 function triggerFailure(title = 'Whoops', text = 'Wrong assembly!', timer = 3000) {
-    swal({
+    alert({
         title,
-        type: 'error',
+        type             : 'error',
         text,
         timer,
         showConfirmButton: false,

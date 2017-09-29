@@ -8,12 +8,9 @@ module.exports = {
     },
     env: {
         browser: true,
-        mocha: true,
+        // mocha: true,
     },
-    // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
-    extends: [
-        'airbnb-base',
-    ],
+    extends: 'airbnb-base',
     // required to lint *.vue files
     plugins: [
         'html',
@@ -22,7 +19,7 @@ module.exports = {
     settings: {
         'import/resolver': {
             'webpack': {
-                'config': './node_modules/laravel-mix/setup/webpack.config.js',
+                'config': 'build/webpack.base.conf.js',
             },
         },
     },
@@ -35,7 +32,7 @@ module.exports = {
         // don't require .vue extension when importing
         'import/extensions': ['error', 'always', {
             js: 'never',
-            vue: 'never'
+            vue: 'never',
         }],
         // allow optionalDependencies
         'import/no-extraneous-dependencies': ['error', {
@@ -46,8 +43,6 @@ module.exports = {
         'comma-dangle': ['error', 'always-multiline'],
         'space-before-function-paren': ['error', 'never'],
         'object-curly-spacing': ['error', 'always'],
-        // 'import/no-unresolved': [0, { commonjs: true, amd: true }],
-        // 'flowtype-errors/show-errors': 2,
         // allow debugger during development
         'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
         'indent': ['error', 4],
