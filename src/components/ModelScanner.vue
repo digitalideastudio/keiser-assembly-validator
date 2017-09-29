@@ -3,19 +3,17 @@
         <el-input
                 ref="barcode"
                 autofocus
-                :class="{ 'is-invalid': scanned && error, 'is-valid': scanned && !error }"
+                :class="{ 'invalid': scanned && error, 'valid': scanned && !error }"
                 placeholder="Product model"
-                icon="fa-barcode"
+                :icon="scanned ? 'fa-times' : null"
                 v-model="barcode"
-                :on-icon-click="enterBarcode"
-                @keypress.enter="enterBarcode"
-                @keydown.esc="resetBarcode"
+                :on-icon-click="resetBarcode"
+                @change="enterBarcode"
         >
+            <template slot="prepend">
+                <i class="fa el-icon-fa-barcode"></i>
+            </template>
         </el-input>
-
-        <span class="input-group-addon" @click="resetBarcode" v-show="barcode">
-            <i class="fa fa-times"></i>
-        </span>
     </div>
 </template>
 
@@ -31,42 +29,38 @@
         },
         data() {
             return {
-                scanned: false,
-                barcode: '',
+                scanned : false,
+                barcode : '',
+                error   : false,
+                assembly: {},
             };
         },
         methods: {
             enterBarcode() {
                 this.scanned = true;
+                this.$emit('scan', this.barcode);
 
-                this.assembly = this.products.find(p => p.model === this.barcode);
+                this.assembly = this.products.find(p => p.model === this.barcode) || {};
 
-                if (this.assembly) {
+                if (this.assembly.model) {
                     this.error = false;
-                    // this.parts = this.assembly.parts.slice(0);
 
                     this.$nextTick(() => {
-                        document.querySelector('#part-model-input0').select();
+                        this.$emit('found', this.assembly);
                     });
                     return;
                 }
 
-                this.$refs.barcode.select();
-                this.$refs.audioE.play();
                 this.error = true;
+                this.$refs.barcode.querySelector('input').select();
+                this.$emit('error', this.barcode);
             },
             resetBarcode() {
                 this.barcode = '';
                 this.scanned = false;
-                this.parts = [];
                 this.$refs.barcode.select();
-
-                this.resetAllPartModel();
+                this.$emit('reset');
             },
         },
     };
 </script>
-
-<style scoped>
-
-</style>

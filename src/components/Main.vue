@@ -1,8 +1,9 @@
 <template>
     <div class="main">
         <p class="page-title">Scan product model</p>
-        <div>
-            <model-scanner :products="product"></model-scanner>
+        <div class="scanner-wrapper" v-loading="!productsLoaded"
+             element-loading-text="Loading products...">
+            <model-scanner :products="product" v-if="productsLoaded"></model-scanner>
         </div>
         <div class="col-xs-12" style="margin-top: 20px" v-show="scanned && !error">
             <table class="table table-bordered">
@@ -55,6 +56,7 @@
         computed: {
             ...mapGetters([
                 'products',
+                'productsLoaded',
             ]),
         },
         methods: {
@@ -103,6 +105,9 @@
                 // this.parts = this.assembly.parts.slice(0);
             },
         },
+        created() {
+            this.$store.dispatch('setProducts');
+        },
     };
     export default Main;
 </script>
@@ -113,6 +118,10 @@
         border-top: 2px solid #e8e8e8;
         padding: 15px 0;
         font-size: 1.2em;
+    }
+
+    .scanner-wrapper {
+        min-height: 100px;
     }
 </style>
 
