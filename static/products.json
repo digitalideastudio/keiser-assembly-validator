@@ -3,24 +3,24 @@
         "model": "ABC123",
         "parts": [
             {
-                "id": "QWE111",
-                "description": "Metal base"
+                "code": "QWE111",
+                "name": "Metal base"
             },
             {
-                "id": "QWE222",
-                "description": "Plastic wheel"
+                "code": "QWE222",
+                "name": "Plastic wheel"
             },
             {
-                "id": "QWE333",
-                "description": "Pedal"
+                "code": "QWE333",
+                "name": "Pedal"
             },
             {
-                "id": "QWE333",
-                "description": "Pedal"
+                "code": "QWE333",
+                "name": "Pedal"
             },
             {
-                "id": "QWE444",
-                "description": "Board computer"
+                "code": "QWE444",
+                "name": "Board computer"
             }
         ]
     },
@@ -28,24 +28,28 @@
         "model": "005506BBC",
         "parts": [
             {
-                "id": "555003",
-                "description": "Flywheel"
+                "code": "555003",
+                "name": "Flywheel"
             },
             {
-                "id": "550814",
-                "description": "Framebase"
+                "code": "550814",
+                "name": "Framebase"
             },
             {
-                "id": "550844",
-                "description": "Handlebar"
+                "code": "550844",
+                "name": "Handlebar"
             },
             {
-                "id": "555017",
-                "description": "Computer"
+                "code": "555017",
+                "name": "Computer"
             },
             {
-                "id": "555016",
-                "description": "Pedal"
+                "code": "555016",
+                "name": "Pedal"
+            },
+            {
+                "code": "555018",
+                "name": "Watch"
             }
         ]
     }

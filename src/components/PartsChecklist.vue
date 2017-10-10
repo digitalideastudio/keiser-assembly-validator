@@ -1,27 +1,59 @@
 <template>
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th class="text-center">Part ID</th>
-            <th class="text-center" style="width: 50%">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(part, index) in assembly.parts" :index="part.id">
-            <th scope="row" v-text="index + 1"></th>
-            <th scope="row" v-text="part.id"></th>
-            <td class="text-center">
-                <part :part="part"></part>
-            </td>
-            <td class="text-center" v-text="part.description"></td>
-        </tr>
-        </tbody>
-    </table>
+    <el-table :data="parts" style="width: 100%" border>
+        <el-table-column
+                type="index"
+                header-align="right"
+                align="right"
+                width="60">
+        </el-table-column>
+        <el-table-column
+                prop="code"
+                label="Part Code"
+                width="170">
+            <template scope="scope">
+                <el-input
+                        :placeholder="scope.row.code"
+                        :icon="getPartIcon(scope)"
+                        @keydown.enter.native="setStatus(scope)"
+                />
+            </template>
+        </el-table-column>
+        <el-table-column
+                prop="name"
+                align="left"
+                label="Part Name">
+        </el-table-column>
+    </el-table>
 </template>
 
 <script>
-    export default {
-        name: 'parts-checklist',
+    const PartsChecklist = {
+        name : 'parts-checklist',
+        props: {
+            parts: {
+                type    : Array,
+                required: true,
+            },
+        },
+        data() {
+            return {
+                checklist: [],
+                scanned  : [],
+            };
+        },
+        methods: {
+            setStatus(scope) {
+                // TODO: Check
+
+                this.scanned.push(scope.row.code);
+            },
+            getPartIcon(scope) {
+                return this.scanned[scope.row.code] ? 'fa-check' : '';
+            },
+        },
+        created() {
+            this.checklist = this.parts;
+        },
     };
+    export default PartsChecklist;
 </script>

@@ -106,7 +106,7 @@
     }
 
     .scanner-wrapper {
-        min-height: 100px;
+        min-height: 35px;
     }
 </style>
 

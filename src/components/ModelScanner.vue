@@ -63,8 +63,9 @@
             resetBarcode() {
                 this.barcode = '';
                 this.scanned = false;
+                this.assembly = {};
                 this.select();
-                this.$emit('reset');
+                this.$emit('reset', this.assembly);
             },
         },
     };
