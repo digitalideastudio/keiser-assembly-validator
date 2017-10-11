@@ -8,8 +8,8 @@
                 :icon="scanned ? 'fa-times' : null"
                 v-model="barcode"
                 :on-icon-click="resetBarcode"
-                @keyup.enter.prevent.native="enterBarcode"
-                @keyup.esc.prevent.native="resetBarcode"
+                @keydown.enter.prevent.native="enterBarcode"
+                @keydown.esc.prevent.native="resetBarcode"
         >
             <template slot="prepend">
                 <i class="fa el-icon-fa-barcode"></i>
@@ -47,7 +47,6 @@
                     this.error = false;
 
                     this.$nextTick(() => {
-                        this.select();
                         this.$emit('found', this.assembly);
                     });
                     return;
@@ -58,15 +57,25 @@
                 this.$emit('error', this.barcode);
             },
             select() {
-                this.$refs.barcode.$el.querySelector('input').select();
+                this.$nextTick(() => {
+                    this.$refs.barcode.$el.querySelector('input').select();
+                });
             },
-            resetBarcode() {
+            resetBarcode(emitEvent = true) {
                 this.barcode = '';
                 this.scanned = false;
                 this.assembly = {};
                 this.select();
-                this.$emit('reset', this.assembly);
+
+                if (emitEvent) {
+                    this.$emit('reset', this.assembly);
+                }
             },
+        },
+        created() {
+            this.$eventHub.$on('resetBarcode', () => {
+                this.resetBarcode(false);
+            });
         },
     };
 </script>

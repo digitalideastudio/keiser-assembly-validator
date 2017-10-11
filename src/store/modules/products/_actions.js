@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 export default {
-    setProducts({ commit }) {
-        return axios.get('/static/products.json')
+    setProducts({ commit }, remoteUrl) {
+        return axios.get(remoteUrl)
             .then(({ data }) => {
                 commit('setProducts', data);
             });

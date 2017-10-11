@@ -1,5 +1,31 @@
 [
     {
+        "model": "ABC111",
+        "startOver": true,
+        "parts": [
+            {
+                "code": "QWE111",
+                "name": "Metal base"
+            },
+            {
+                "code": "QWE222",
+                "name": "Plastic wheel"
+            },
+            {
+                "code": "QWE333",
+                "name": "Pedal"
+            },
+            {
+                "code": "QWE333",
+                "name": "Pedal"
+            },
+            {
+                "code": "QWE444",
+                "name": "Board computer"
+            }
+        ]
+    },
+    {
         "model": "ABC123",
         "parts": [
             {

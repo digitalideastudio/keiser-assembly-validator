@@ -6,9 +6,12 @@ import App from './App';
 import router from './router';
 import store from './store';
 
+require('sweetalert');
+
 Vue.use(Element);
 Vue.config.productionTip = false;
 
+Vue.prototype.$eventHub = new Vue();
 /* eslint-disable no-new */
 new Vue({
     el        : '#app',
