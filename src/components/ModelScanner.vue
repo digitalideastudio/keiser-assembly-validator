@@ -19,7 +19,7 @@
 </template>
 
 <script>
-    export default {
+    const ModelScanner = {
         name : 'model-scanner',
         props: {
             products: {
@@ -78,6 +78,7 @@
             });
         },
     };
+    export default ModelScanner;
 </script>
 
 <style>
