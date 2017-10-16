@@ -2,7 +2,7 @@
 // http://nightwatchjs.org/guide#usage
 
 module.exports = {
-    'Testing initial model scanner state': function test(browser) {
+    'Testing main app module': function test(browser) {
         // automatically uses dev Server port from /config.index.js
         // default: http://localhost:8080
         // see nightwatch.conf.js
@@ -11,15 +11,11 @@ module.exports = {
         browser
             .url(devServer)
             .waitForElementVisible('#app', 5000)
-            .assert.elementPresent('.el-input input')
-            .assert.attributeEquals('.el-input input', 'icon', 'fa-barcode')
-            .assert.attributeEquals('.el-input input', 'placeholder', 'Product model')
-            .assert.cssClassNotPresent('.el-input input', 'valid')
-            .assert.cssClassNotPresent('.el-input input', 'invalid')
-            // .assert.elementCount('img', 1)
+            .assert.elementPresent('.box-card')
+            .assert.elementPresent('.keiser-logo')
             .end();
     },
-    'Scanning teset': function test(browser) {
+    'Scanning test': function test(browser) {
         // automatically uses dev Server port from /config.index.js
         // default: http://localhost:8080
         // see nightwatch.conf.js

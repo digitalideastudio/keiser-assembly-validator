@@ -124,10 +124,7 @@
     }
 </style>
 
-
-<style lang="scss">
-    @import '../scss/main.scss';
-
+<style>
     .el-loading-spinner {
         top: 30%;
     }

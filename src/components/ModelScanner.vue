@@ -85,11 +85,15 @@
 </script>
 
 <style>
-    .invalid input, .invalid:focus input, .invalid:hover input {
+    .invalid input,
+    .invalid:focus input,
+    .invalid:hover input {
         border: 1px solid #ff4949 !important;
     }
 
-    .valid input, .valid:focus input, .valid:hover input {
+    .valid input,
+    .valid:focus input,
+    .valid:hover input {
         border: 1px solid #13ce66 !important;
     }
 </style>

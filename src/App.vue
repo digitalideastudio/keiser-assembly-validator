@@ -53,3 +53,7 @@
         font-size: 1.9em;
     }
 </style>
+
+<style lang="scss">
+    @import 'scss/main.scss';
+</style>
