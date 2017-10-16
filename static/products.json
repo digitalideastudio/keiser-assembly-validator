@@ -1,63 +1,63 @@
 [
     {
-        "id": 1,
+        "index": 1,
         "model": "ABC111",
         "startOver": true,
         "parts": [
             {
-                "id"  : 1,
-                "code": "QWE111",
+                "index": 1,
+                "id": "QWE111",
                 "name": "Metal base"
             },
             {
-                "id"  : 2,
-                "code": "QWE222",
+                "index": 2,
+                "id": "QWE222",
                 "name": "Plastic wheel"
             },
             {
-                "id"  : 3,
-                "code": "QWE333",
+                "index": 3,
+                "id": "QWE333",
                 "name": "Pedal"
             },
             {
-                "id"  : 4,
-                "code": "QWE333",
+                "index": 4,
+                "id": "QWE333",
                 "name": "Pedal"
             },
             {
-                "id"  : 5,
-                "code": "QWE444",
+                "index": 5,
+                "id": "QWE444",
                 "name": "Board computer"
             }
         ]
     },
     {
-        "id": 2,
+        "index": 2,
         "model": "ABC123",
         "parts": [
             {
-                "id"  : 6,
-                "code": "QWE111",
+                "index": 6,
+                "id": "QWE111",
                 "name": "Metal base"
             },
             {
-                "id"  : 7,
-                "code": "QWE222",
+                "index": 7,
+                "id": "QWE222",
                 "name": "Plastic wheel"
             },
             {
-                "id"  : 8,
-                "code": "QWE333",
+                "index": 8,
+                "id": "QWE333",
                 "name": "Pedal"
             },
             {
-                "id"  : 9,
-                "code": "QWE333",
+                "index": 9,
+                "id": "QWE333",
                 "name": "Pedal"
             },
             {
-                "id"  : 10,
-                "code": "QWE444",
+                "index": 10,
+                "id": "QWE444",
                 "name": "Board computer"
             }
         ]
@@ -66,27 +66,33 @@
         "model": "005506BBC",
         "parts": [
             {
-                "code": "555003",
+                "index": 11,
+                "id": "555003",
                 "name": "Flywheel"
             },
             {
-                "code": "550814",
+                "index": 12,
+                "id": "550814",
                 "name": "Framebase"
             },
             {
-                "code": "550844",
+                "index": 13,
+                "id": "550844",
                 "name": "Handlebar"
             },
             {
-                "code": "555017",
+                "index": 14,
+                "id": "555017",
                 "name": "Computer"
             },
             {
-                "code": "555016",
+                "index": 15,
+                "id": "555016",
                 "name": "Pedal"
             },
             {
-                "code": "555018",
+                "index": 16,
+                "id": "555018",
                 "name": "Watch"
             }
         ]

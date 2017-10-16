@@ -2,21 +2,21 @@
     <div class="PartsChecklist">
         <div class="thead">
             <div class="table-row">
-                <div>ID</div>
+                <div>#</div>
                 <div>
-                    <span>Part Code</span>
+                    <span>Part ID</span>
                 </div>
                 <div>Part Name</div>
             </div>
         </div>
         <div class="tbody">
-            <div v-for="(part, index) in checklist" :key="part.id" class="table-row">
+            <div v-for="(part, index) in checklist" :key="part.index" class="table-row">
                 <div>{{ index + 1 }}</div>
                 <div>
                     <el-input
                         size="small"
                         :ref="`inputs${index}`"
-                        :placeholder="part.code"
+                        :placeholder="part.id"
                         :icon="getPartIcon(part)"
                         @keydown.enter.native="validatePart(index, part, $event)"
                     ></el-input>
@@ -45,15 +45,15 @@
         },
         methods: {
             validatePart(index, currentPart, $event) {
-                const enteredCode = $event.srcElement.value;
+                const enteredId = $event.srcElement.value;
                 const expectedPart = this.checklist[index];
-                const expectedCode = expectedPart.code;
-                const isValidPosition = enteredCode === expectedCode;
+                const expectedId = expectedPart.id;
+                const isValidPosition = enteredId === expectedId;
 
-                const isExistsInChecklist = this.parts.filter(part => part.code === enteredCode).length;
-                const partsCountNeeded = this.parts.filter(part => part.code === enteredCode).length;
+                const isExistsInChecklist = this.parts.filter(part => part.id === enteredId).length;
+                const partsCountNeeded = this.parts.filter(part => part.id === enteredId).length;
                 const partsCountScanned = this.checklist.filter(
-                    part => part.success && part.code === enteredCode
+                    part => part.success && part.id === enteredId
                 ).length;
 
                 this.$set(currentPart, 'error', false);
@@ -89,15 +89,15 @@
 
                 if (!isValidPosition) {
                     const enteredPartPosition = this.checklist.findIndex(
-                        part => part.code === enteredCode
+                        part => part.id === enteredId
                     );
-                    const oldCode = currentPart.code;
+                    const oldId = currentPart.id;
                     const oldName = currentPart.name;
 
-                    this.checklist[index].code = this.checklist[enteredPartPosition].code;
+                    this.checklist[index].id = this.checklist[enteredPartPosition].id;
                     this.checklist[index].name = this.checklist[enteredPartPosition].name;
 
-                    this.checklist[enteredPartPosition].code = oldCode;
+                    this.checklist[enteredPartPosition].id = oldId;
                     this.checklist[enteredPartPosition].name = oldName;
                 }
 
