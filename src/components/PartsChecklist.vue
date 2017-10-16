@@ -1,30 +1,30 @@
 <template>
-    <el-table :data="checklist" style="width: 100%" border>
-        <el-table-column
-                type="index"
-                header-align="right"
-                align="right"
-                width="60">
-        </el-table-column>
-        <el-table-column
-                prop="code"
-                label="Part Code"
-                width="200">
-            <template scope="scope">
-                <el-input
-                        :ref="`input${scope.$index}`"
-                        :placeholder="scope.row.code"
-                        :icon="getPartIcon(scope)"
-                        @keydown.enter.native="validatePart(scope, $event)"
-                ></el-input>
-            </template>
-        </el-table-column>
-        <el-table-column
-                prop="name"
-                align="left"
-                label="Part Name">
-        </el-table-column>
-    </el-table>
+    <div class="PartsChecklist">
+        <div class="thead">
+            <div class="table-row">
+                <div>ID</div>
+                <div>
+                    <span>Part Code</span>
+                </div>
+                <div>Part Name</div>
+            </div>
+        </div>
+        <div class="tbody">
+            <div v-for="(part, index) in checklist" :key="part.id" class="table-row">
+                <div>{{ index + 1 }}</div>
+                <div>
+                    <el-input
+                        size="small"
+                        :ref="`inputs${index}`"
+                        :placeholder="part.code"
+                        :icon="getPartIcon(part)"
+                        @keydown.enter.native="validatePart(index, part, $event)"
+                    ></el-input>
+                </div>
+                <div>{{ part.name }}</div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -44,43 +44,78 @@
             };
         },
         methods: {
-            validatePart(scope, $event) {
-                console.log(scope);
-                const isExistsInChecklist
-                    = this.parts.filter(part => part.code === $event.srcElement.value).length;
+            validatePart(index, currentPart, $event) {
+                const enteredCode = $event.srcElement.value;
+                const expectedPart = this.checklist[index];
+                const expectedCode = expectedPart.code;
+                const isValidPosition = enteredCode === expectedCode;
 
-                this.$set(scope.row, 'error', false);
-                this.$set(scope.row, 'success', false);
+                const isExistsInChecklist = this.parts.filter(part => part.code === enteredCode).length;
+                const partsCountNeeded = this.parts.filter(part => part.code === enteredCode).length;
+                const partsCountScanned = this.checklist.filter(
+                    part => part.success && part.code === enteredCode
+                ).length;
+
+                this.$set(currentPart, 'error', false);
+                this.$set(currentPart, 'success', false);
 
                 if (!isExistsInChecklist) {
-                    this.$set(scope.row, 'error', true);
+                    this.$set(currentPart, 'error', true);
                     this.$nextTick(() => {
                         swal({
-                            title            : 'Error',
-                            icon             : 'error',
-                            text             : 'Wrong assembly!',
-                            timer            : 3000,
-                            showConfirmButton: false,
+                            title : 'Error',
+                            icon  : 'error',
+                            text  : 'Wrong assembly!',
+                            timer : 3000,
+                            button: false,
                         }).then(() => $event.srcElement.select());
                     });
                     return;
                 }
 
-                this.$set(scope.row, 'success', true);
+                if (partsCountScanned >= partsCountNeeded) {
+                    this.$set(currentPart, 'error', true);
+                    this.$nextTick(() => {
+                        swal({
+                            title : 'Error',
+                            icon  : 'error',
+                            text  : 'Duplicate detected!',
+                            timer : 3000,
+                            button: false,
+                        }).then(() => $event.srcElement.select());
+                    });
+                    return;
+                }
+
+                if (!isValidPosition) {
+                    const enteredPartPosition = this.checklist.findIndex(
+                        part => part.code === enteredCode
+                    );
+                    const oldCode = currentPart.code;
+                    const oldName = currentPart.name;
+
+                    this.checklist[index].code = this.checklist[enteredPartPosition].code;
+                    this.checklist[index].name = this.checklist[enteredPartPosition].name;
+
+                    this.checklist[enteredPartPosition].code = oldCode;
+                    this.checklist[enteredPartPosition].name = oldName;
+                }
+
+                this.$set(currentPart, 'success', true);
                 this.$nextTick(() => {
-                    if (scope.$index === this.checklist.length - 1) {
+                    if (index === this.checklist.length - 1) {
                         this.complete();
                         return;
                     }
-                    this.$refs[`input${scope.$index + 1}`].$el.querySelector('input').select();
+                    this.$refs[`inputs${index + 1}`][0].$el.querySelector('input').select();
                 });
             },
-            getPartIcon(scope) {
-                if (scope.row.error) {
+            getPartIcon(part) {
+                if (part.error) {
                     return 'fa-times text-danger';
                 }
 
-                if (scope.row.success) {
+                if (part.success) {
                     return 'fa-check text-success';
                 }
 
@@ -116,7 +151,74 @@
     export default PartsChecklist;
 </script>
 
+<style scoped>
+    .PartsChecklist {
+        border-left: 1px solid #eee;
+        border-top: 1px solid #eee;
+        font-size: .9em;
+    }
+
+    .thead,
+    .tbody {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .thead {
+        background: #e6e6e6;
+        font-weight: bold;
+    }
+
+    .table-row {
+        flex: 1;
+        display : flex;
+        flex-direction: row;
+    }
+
+    .table-row > div:nth-child(2),
+    .table-row > div:nth-child(3) {
+        flex: 5;
+        text-align: left;
+    }
+
+    .table-row > div {
+        border-right: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+    }
+
+    .table-row > div:nth-child(1) {
+        flex: 1;
+        padding-top: 10px;
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+
+    .table-row > div:nth-child(3) {
+        padding-top: 10px;
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+
+    .thead .table-row > div {
+        padding: 7px;
+    }
+
+    .table-row > div:nth-child(2) {
+        flex: 4;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .table-row > div:nth-child(2) span {
+        padding-left: 7px;
+    }
+</style>
+
 <style>
+    .tbody .table-row > div:nth-child(2) input {
+        border-radius: 0;
+    }
+
     .text-success {
         color: #13CE66;
     }

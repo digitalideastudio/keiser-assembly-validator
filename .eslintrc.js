@@ -43,6 +43,7 @@ module.exports = {
         'comma-dangle': ['error', 'always-multiline'],
         'space-before-function-paren': ['error', 'never'],
         'object-curly-spacing': ['error', 'always'],
+        'function-paren-newline': ['error', 'consistent'],
         // allow debugger during development
         'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
         'indent': ['error', 4],

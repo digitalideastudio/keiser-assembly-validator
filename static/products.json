@@ -1,50 +1,62 @@
 [
     {
+        "id": 1,
         "model": "ABC111",
         "startOver": true,
         "parts": [
             {
+                "id"  : 1,
                 "code": "QWE111",
                 "name": "Metal base"
             },
             {
+                "id"  : 2,
                 "code": "QWE222",
                 "name": "Plastic wheel"
             },
             {
+                "id"  : 3,
                 "code": "QWE333",
                 "name": "Pedal"
             },
             {
+                "id"  : 4,
                 "code": "QWE333",
                 "name": "Pedal"
             },
             {
+                "id"  : 5,
                 "code": "QWE444",
                 "name": "Board computer"
             }
         ]
     },
     {
+        "id": 2,
         "model": "ABC123",
         "parts": [
             {
+                "id"  : 6,
                 "code": "QWE111",
                 "name": "Metal base"
             },
             {
+                "id"  : 7,
                 "code": "QWE222",
                 "name": "Plastic wheel"
             },
             {
+                "id"  : 8,
                 "code": "QWE333",
                 "name": "Pedal"
             },
             {
+                "id"  : 9,
                 "code": "QWE333",
                 "name": "Pedal"
             },
             {
+                "id"  : 10,
                 "code": "QWE444",
                 "name": "Board computer"
             }
