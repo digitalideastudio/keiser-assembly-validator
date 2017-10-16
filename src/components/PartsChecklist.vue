@@ -6,7 +6,7 @@
                 <div>
                     <span>Part ID</span>
                 </div>
-                <div>Part Name</div>
+                <div>Description</div>
             </div>
         </div>
         <div class="tbody">
@@ -21,7 +21,7 @@
                         @keydown.enter.native="validatePart(index, part, $event)"
                     ></el-input>
                 </div>
-                <div>{{ part.name }}</div>
+                <div>{{ part.description }}</div>
             </div>
         </div>
     </div>
@@ -92,13 +92,13 @@
                         part => part.id === enteredId
                     );
                     const oldId = currentPart.id;
-                    const oldName = currentPart.name;
+                    const oldDescription = currentPart.description;
 
                     this.checklist[index].id = this.checklist[enteredPartPosition].id;
-                    this.checklist[index].name = this.checklist[enteredPartPosition].name;
+                    this.checklist[index].description = this.checklist[enteredPartPosition].description;
 
                     this.checklist[enteredPartPosition].id = oldId;
-                    this.checklist[enteredPartPosition].name = oldName;
+                    this.checklist[enteredPartPosition].description = oldDescription;
                 }
 
                 this.$set(currentPart, 'success', true);
