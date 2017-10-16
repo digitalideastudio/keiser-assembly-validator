@@ -7,6 +7,7 @@ import mutations from './mutations';
 import getters from './getters';
 import products from './modules/products';
 import settings from './modules/settings';
+import users from './modules/users';
 
 Vue.use(Vuex);
 
@@ -21,5 +22,6 @@ export default new Vuex.Store({
     modules: {
         settings,
         products,
+        users,
     },
 });

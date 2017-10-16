@@ -2,7 +2,7 @@
     <div id="app" class="App">
         <el-row>
             <el-col :span="12" :offset="6">
-                <el-card class="box-card">
+                <el-card class="box-card" :style="{ background: appBackground }">
                     <img src="./assets/keiser-logo.svg" alt="" class="keiser-logo">
                     <div class="card-body">
                         <h4 class="card-title">Product Assembly QC</h4>
@@ -13,6 +13,17 @@
         </el-row>
     </div>
 </template>
+
+<script>
+    export default {
+        name    : 'app',
+        computed: {
+            appBackground() {
+                return this.$route.name === 'Auth' ? '#f443362e' : 'aliceblue';
+            },
+        },
+    };
+</script>
 
 <style scoped>
     .App {

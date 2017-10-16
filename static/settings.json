@@ -1,3 +1,4 @@
 {
-    "remoteUrl": "http://localhost:8080/static/products.json"
+    "productUrl": "http://localhost:8080/static/products.json",
+    "usersUrl": "http://localhost:8080/static/users.json"
 }

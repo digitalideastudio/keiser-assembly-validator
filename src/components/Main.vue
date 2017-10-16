@@ -1,17 +1,22 @@
 <template>
     <div class="main">
-        <p class="page-title">Scan product model</p>
-        <div class="scanner-wrapper" v-loading="!productsLoaded"
-             element-loading-text="Loading products...">
-            <model-scanner
-                    :products="products"
-                    v-if="productsLoaded"
-                    @found="setAssembly"
-                    @reset="resetAssembly">
-            </model-scanner>
+        <div v-if="currentUserLoaded">
+            <p class="page-title">Hello, {{ currentUser.name }}! Please scan product model</p>
+            <div class="scanner-wrapper" v-loading="!productsLoaded"
+                 element-loading-text="Loading products...">
+                <model-scanner
+                        :products="products"
+                        v-if="productsLoaded"
+                        @found="setAssembly"
+                        @reset="resetAssembly">
+                </model-scanner>
+            </div>
+            <div class="col-xs-12" style="margin-top: 20px" v-if="assembly.model">
+                <parts-checklist :parts="assembly.parts" @complete="resetPage"></parts-checklist>
+            </div>
         </div>
-        <div class="col-xs-12" style="margin-top: 20px" v-if="assembly.model">
-            <parts-checklist :parts="assembly.parts" @complete="resetPage"></parts-checklist>
+        <div class="unauthorized" v-else>
+            You are not logged in. <router-link to="/">Back.</router-link>
         </div>
     </div>
 </template>
@@ -39,6 +44,8 @@
         },
         computed: {
             ...mapGetters([
+                'currentUser',
+                'currentUserLoaded',
                 'products',
                 'productsLoaded',
             ]),
@@ -93,7 +100,7 @@
         created() {
             this.$store.dispatch('setSettings')
                 .then((data) => {
-                    this.$store.dispatch('setProducts', data.remoteUrl);
+                    this.$store.dispatch('setProducts', data.productUrl);
                 });
         },
     };
@@ -110,6 +117,10 @@
 
     .scanner-wrapper {
         min-height: 35px;
+    }
+
+    .unauthorized {
+        padding-top: 20px;
     }
 </style>
 
