@@ -1,4 +1,4 @@
 {
-    "productUrl": "http://localhost:8080/static/products.json",
-    "usersUrl": "http://localhost:8080/static/users.json"
+    "productUrl": "/static/products.json",
+    "usersUrl": "/static/users.json"
 }
