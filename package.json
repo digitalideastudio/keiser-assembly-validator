@@ -17,6 +17,7 @@
     "axios": "^0.16.2",
     "element-ui": "^1.4.7",
     "font-awesome": "^4.7.0",
+    "howler": "^2.0.5",
     "sweetalert": "^2.0.8",
     "vue": "^2.5.2",
     "vue-router": "^2.8.1",

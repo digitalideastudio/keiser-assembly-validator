@@ -19,6 +19,18 @@
 </template>
 
 <script>
+    import { Howl } from 'howler';
+
+    const successSound = new Howl({
+        src   : ['static/sound/success.webm', 'static/sound/success.mp3'],
+        volume: 0.5,
+    });
+
+    const errorSound = new Howl({
+        src   : ['static/sound/error.webm', 'static/sound/error.mp3'],
+        volume: 0.5,
+    });
+
     const ModelScanner = {
         name : 'model-scanner',
         props: {
@@ -44,6 +56,7 @@
                 this.assembly = this.products.find(p => p.model === this.barcode) || {};
 
                 if (this.assembly.model) {
+                    successSound.play();
                     this.error = false;
 
                     this.$nextTick(() => {
@@ -52,6 +65,7 @@
                     return;
                 }
 
+                errorSound.play();
                 this.error = true;
                 this.select();
                 this.$emit('error', this.barcode);
