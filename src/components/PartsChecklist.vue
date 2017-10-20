@@ -29,6 +29,12 @@
 
 <script>
     import swal from 'sweetalert';
+    import { Howl } from 'howler';
+
+    const errorSound = new Howl({
+        src   : ['static/sound/error.webm', 'static/sound/error.mp3'],
+        volume: 0.5,
+    });
 
     const PartsChecklist = {
         name : 'parts-checklist',
@@ -60,6 +66,7 @@
                 this.$set(currentPart, 'success', false);
 
                 if (!isExistsInChecklist) {
+                    errorSound.play();
                     this.$set(currentPart, 'error', true);
                     this.$nextTick(() => {
                         swal({
@@ -74,6 +81,7 @@
                 }
 
                 if (partsCountScanned >= partsCountNeeded) {
+                    errorSound.play();
                     this.$set(currentPart, 'error', true);
                     this.$nextTick(() => {
                         swal({
@@ -88,6 +96,7 @@
                 }
 
                 if (!isValidPosition) {
+                    errorSound.play();
                     const enteredPartPosition = this.checklist.findIndex(
                         part => part.id === enteredId
                     );
