@@ -22,11 +22,6 @@
     import swal from 'sweetalert';
     import { Howl } from 'howler';
 
-    const enterSound = new Howl({
-        src   : ['static/sound/enter.webm', 'static/sound/enter.mp3'],
-        volume: 1,
-    });
-
     const gameOverSound = new Howl({
         src   : ['static/sound/game_over.webm', 'static/sound/game_over.mp3'],
         volume: 1,
@@ -57,7 +52,6 @@
                 this.user = this.users.find(u => u.id === this.id) || {};
 
                 if (this.user.id) {
-                    enterSound.play();
                     this.error = false;
 
                     this.$nextTick(() => {

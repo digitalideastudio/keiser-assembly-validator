@@ -23,10 +23,16 @@
 
 <script>
     import { mapGetters } from 'vuex';
+    import { Howl } from 'howler';
     import { triggerFailure, triggerSuccess } from '../helpers/util';
     import Part from './Part';
     import ModelScanner from './ModelScanner';
     import PartsChecklist from './PartsChecklist';
+
+    const successSound = new Howl({
+        src   : ['static/sound/success.webm', 'static/sound/success.mp3'],
+        volume: 0.5,
+    });
 
     const Main = {
         name      : 'main',
@@ -73,6 +79,7 @@
                         const nextPart = document.querySelector(`#part-model-input${index + 1}`);
 
                         if (this.parts.length === 0 && Object.values(this.partScanned).every(k => k)) {
+                            successSound.play();
                             triggerSuccess();
                         } else if (nextPart) {
                             nextPart.select();

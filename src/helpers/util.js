@@ -13,7 +13,6 @@ function triggerSuccess() {
         showConfirmButton: false,
     });
     this.resetAllPartModel();
-    this.$refs.audioS.play();
     window.setTimeout(() => {
         const inp = document.querySelector('#part-model-input0');
 
@@ -31,7 +30,6 @@ function triggerFailure(title = 'Whoops', text = 'Wrong assembly!', timer = 3000
         timer,
         showConfirmButton: false,
     });
-    this.$refs.audioE.play();
 }
 
 export {
