@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <div v-if="currentUserLoaded">
-            <p class="page-title">Hello, {{ currentUser.name }}! Please scan product model</p>
+            <p class="page-title">Hello, <span class="user-name" v-text="currentUser.name"></span>! Please scan product model</p>
             <div class="scanner-wrapper" v-loading="!productsLoaded"
                  element-loading-text="Loading products...">
                 <model-scanner
@@ -74,6 +74,7 @@
 
                 if (foundPart) {
                     this.$set(this.partScanned, index, true);
+                    // noinspection JSUnresolvedVariable
                     this.$set(this.partErrors, index, false);
                     this.$nextTick(() => {
                         const nextPart = document.querySelector(`#part-model-input${index + 1}`);
@@ -95,10 +96,12 @@
                 } else {
                     triggerFailure();
                 }
+                // noinspection JSUnresolvedVariable
                 this.$set(this.partErrors, index, true);
                 document.querySelector(`#part-model-input${index}`).select();
             },
             resetPage() {
+                // noinspection JSUnresolvedVariable
                 if (this.assembly.startOver) {
                     this.resetAssembly();
                 }
@@ -107,10 +110,14 @@
         created() {
             this.$store.dispatch('setSettings')
                 .then((data) => {
-                    this.$store.dispatch('setProducts', data.productUrl);
+                    // noinspection JSUnresolvedVariable
+                    this.$store.dispatch('setProducts', data.productUrl)
+                        .then(() => {})
+                        .catch(() => console.warn('Cannot set users!')); // eslint-disable-line no-console
                 });
         },
     };
+    // noinspection JSUnusedGlobalSymbols
     export default Main;
 </script>
 
@@ -132,6 +139,7 @@
 </style>
 
 <style>
+    /*noinspection CssUnusedSymbol*/
     .el-loading-spinner {
         top: 30%;
     }

@@ -10,9 +10,11 @@
             </div>
         </div>
         <div class="tbody">
+            <!--suppress CommaExpressionJS -->
             <div v-for="(part, index) in checklist" :key="part.index" class="table-row">
                 <div>{{ index + 1 }}</div>
                 <div>
+                    <!--suppress JSUnresolvedVariable -->
                     <el-input
                         size="small"
                         :ref="`inputs${index}`"
@@ -226,13 +228,5 @@
 <style>
     .tbody .table-row > div:nth-child(2) input {
         border-radius: 0;
-    }
-
-    .text-success {
-        color: #13CE66;
-    }
-
-    .text-danger {
-        color: #FF4949;
     }
 </style>

@@ -30,17 +30,24 @@
         },
         methods: {
             setCurrentUser(user) {
-                this.$store.dispatch('setCurrentUser', user);
+                this.$store.dispatch('setCurrentUser', user)
+                    .then(() => {})
+                    .catch(() => console.warn('Cannot set current user!')); // eslint-disable-line no-console
                 this.$router.push('/validate');
             },
         },
         created() {
             this.$store.dispatch('setSettings')
                 .then((data) => {
-                    this.$store.dispatch('setUsers', data.usersUrl);
-                });
+                    // noinspection JSUnresolvedVariable
+                    this.$store.dispatch('setUsers', data.usersUrl)
+                        .then(() => {})
+                        .catch(() => console.warn('Cannot set users!')); // eslint-disable-line no-console
+                })
+                .catch(() => console.warn('Cannot load settings!')); // eslint-disable-line no-console
         },
     };
+    // noinspection JSUnusedGlobalSymbols
     export default Auth;
 </script>
 
@@ -52,11 +59,3 @@
         font-size: 1.2em;
     }
 </style>
-
-
-<style>
-    .el-loading-spinner {
-        top: 30%;
-    }
-</style>
-

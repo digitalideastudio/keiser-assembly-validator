@@ -12,7 +12,6 @@ function triggerSuccess() {
         timer            : 3000,
         showConfirmButton: false,
     });
-    this.resetAllPartModel();
     window.setTimeout(() => {
         const inp = document.querySelector('#part-model-input0');
 

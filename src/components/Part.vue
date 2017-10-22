@@ -1,5 +1,6 @@
 <template>
     <div class="input-group input-group-sm Part">
+        <!--suppress HtmlFormInputWithoutLabel, JSUnresolvedFunction -->
         <input type="text"
                :readonly="part.scanned"
                :id="`part-model-input${index}`"
@@ -10,6 +11,7 @@
                v-model="partModels[index]"
                @keypress.enter="enterPartModel(index)"
                @keydown.esc="resetPartModel(index)">
+        <!--suppress JSUnresolvedFunction -->
         <span class="input-group-addon" @click="resetPartModel(index)"
               v-show="partModels[index]">
             <i class="fa fa-times" v-show="!partScanned[index]"></i>

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-    export default {
+    const App = {
         name    : 'app',
         computed: {
             appBackground() {
@@ -23,6 +23,8 @@
             },
         },
     };
+    // noinspection JSUnusedGlobalSymbols
+    export default App;
 </script>
 
 <style scoped>
