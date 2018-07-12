@@ -53,8 +53,6 @@
 
 <style scoped>
     .page-title {
-        margin-top: 10px;
-        border-top: 2px solid #e8e8e8;
         padding: 15px 0;
         font-size: 1.2em;
     }

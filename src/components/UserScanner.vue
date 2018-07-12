@@ -5,9 +5,8 @@
                 autofocus
                 :class="{ 'invalid': scanned && error, 'valid': scanned && !error }"
                 placeholder="User Badge"
-                :icon="scanned ? 'fa-times' : null"
+                :prefix-icon="scanned ? 'fa-times' : null"
                 v-model="id"
-                :on-icon-click="resetId"
                 @keydown.enter.prevent.native="enterId"
                 @keydown.esc.prevent.native="resetId"
         >
@@ -23,7 +22,7 @@
     import { Howl } from 'howler';
 
     const gameOverSound = new Howl({
-        src   : ['static/sound/game_over.webm', 'static/sound/game_over.mp3'],
+        src   : ['/sound/game_over.webm', '/sound/game_over.mp3'],
         volume: 1,
     });
 

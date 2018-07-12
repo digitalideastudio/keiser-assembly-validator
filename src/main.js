@@ -13,11 +13,9 @@ Vue.use(Element);
 Vue.config.productionTip = false;
 
 Vue.prototype.$eventHub = new Vue();
-/* eslint-disable no-new */
+
 new Vue({
-    el        : '#app',
-    router,
-    store,
-    template  : '<App/>',
-    components: { App },
-});
+  router,
+  store,
+  render: h => h(App)
+}).$mount('#app');

@@ -3,7 +3,6 @@
         <!--suppress HtmlFormInputWithoutLabel, JSUnresolvedFunction -->
         <input type="text"
                :readonly="part.scanned"
-               :id="`part-model-input${index}`"
                :class="{ 'is-invalid': part.error, 'is-valid': !part.error }"
                class="form-control"
                :placeholder="part.id"

@@ -1,7 +1,6 @@
 <template>
     <div class="main">
         <div v-if="currentUserLoaded">
-            <p class="page-title">Hello, <span class="user-name" v-text="currentUser.name"></span>! Please scan product model</p>
             <div class="scanner-wrapper" v-loading="!productsLoaded"
                  element-loading-text="Loading products...">
                 <model-scanner
@@ -30,12 +29,12 @@
     import PartsChecklist from './PartsChecklist';
 
     const successSound = new Howl({
-        src   : ['static/sound/success.webm', 'static/sound/success.mp3'],
+        src   : ['/sound/success.webm', '/sound/success.mp3'],
         volume: 0.5,
     });
 
-    const Main = {
-        name      : 'main',
+    export default {
+        name      : 'Dashboard',
         components: {
             Part,
             ModelScanner,
@@ -117,18 +116,9 @@
                 });
         },
     };
-    // noinspection JSUnusedGlobalSymbols
-    export default Main;
 </script>
 
 <style scoped>
-    .page-title {
-        margin-top: 10px;
-        border-top: 2px solid #e8e8e8;
-        padding: 15px 0;
-        font-size: 1.2em;
-    }
-
     .scanner-wrapper {
         min-height: 35px;
     }

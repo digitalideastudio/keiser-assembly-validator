@@ -19,7 +19,7 @@
                         size="small"
                         :ref="`inputs${index}`"
                         :placeholder="part.id"
-                        :icon="getPartIcon(part)"
+                        :prefix-icon="getPartIcon(part)"
                         @keydown.enter.native="validatePart(index, part, $event)"
                     ></el-input>
                 </div>
@@ -34,7 +34,7 @@
     import { Howl } from 'howler';
 
     const errorSound = new Howl({
-        src   : ['static/sound/error.webm', 'static/sound/error.mp3'],
+        src   : ['/sound/error.webm', '/sound/error.mp3'],
         volume: 0.5,
     });
 

@@ -3,7 +3,7 @@ import Router from 'vue-router';
 // noinspection NpmUsedModulesInstalled
 import Auth from '@/components/Auth';
 // noinspection NpmUsedModulesInstalled
-import Main from '@/components/Main';
+import Dashboard from '@/components/Dashboard';
 
 Vue.use(Router);
 
@@ -16,8 +16,8 @@ export default new Router({
         },
         {
             path     : '/validate',
-            name     : 'Main',
-            component: Main,
+            name     : 'Dashboard',
+            component: Dashboard,
         },
     ],
 });

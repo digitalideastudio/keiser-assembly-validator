@@ -3,12 +3,15 @@
         <el-row>
             <el-col :span="12" :offset="6">
                 <el-card class="box-card" :style="{ background: appBackground }">
-                    <img src="./assets/keiser-logo.svg" alt="" class="keiser-logo">
                     <div class="card-body">
-                        <h4 class="card-title">Product Assembly QC</h4>
                         <router-view></router-view>
                     </div>
                 </el-card>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="12" :offset="11">
+                <img src="./assets/keiser-logo.svg" alt="" class="keiser-logo">
             </el-col>
         </el-row>
     </div>
@@ -44,7 +47,7 @@
     }
 
     .keiser-logo {
-        width: 30%;
+        width: 80px;
         border-top-left-radius: calc(.25rem - 1px);
         border-top-right-radius: calc(.25rem - 1px);
         margin: 15px auto;
