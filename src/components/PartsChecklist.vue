@@ -38,6 +38,11 @@
         volume: 0.5,
     });
 
+    const successSound = new Howl({
+      src   : ['/sound/success.webm', '/sound/success.mp3'],
+      volume: 0.5,
+    });
+
     const PartsChecklist = {
         name : 'parts-checklist',
         props: {
@@ -98,7 +103,6 @@
                 }
 
                 if (!isValidPosition) {
-                    errorSound.play();
                     const enteredPartPosition = this.checklist.findIndex(
                         part => part.id === enteredId
                     );
@@ -133,6 +137,7 @@
                 return '';
             },
             complete() {
+                successSound.play();
                 this.$emit('complete');
                 swal({
                     title : 'Great job',

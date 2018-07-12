@@ -97,12 +97,16 @@ const ModelScanner = {
     },
     selectSerial() {
       this.$nextTick(() => {
-        this.$refs.serial.$el.querySelector('input').select();
+        if (this.$refs.serial) {
+          this.$refs.serial.$el.querySelector('input').select();
+        }
       });
     },
     select() {
       this.$nextTick(() => {
-        this.$refs.barcode.$el.querySelector('input').select();
+        if (this.$refs.barcode) {
+          this.$refs.barcode.$el.querySelector('input').select();
+        }
       });
     },
     resetBarcode(emitEvent = true) {
@@ -145,7 +149,9 @@ const ModelScanner = {
     });
   },
   mounted() {
-    this.$refs.serial.$el.querySelector('input').select();
+    if (this.$refs.serial) {
+      this.$refs.serial.$el.querySelector('input').select();
+    }
   },
   watch: {
     serial() {
