@@ -1,7 +1,7 @@
 <template>
     <div id="app" class="App">
         <el-row>
-            <el-col :span="12" :offset="6">
+            <el-col :span="18" :offset="3">
                 <el-card class="box-card" :style="{ background: appBackground }">
                     <div class="card-body">
                         <router-view></router-view>
@@ -37,7 +37,7 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
-        margin-top: 60px;
+        margin-top: 100px;
         margin-right: auto;
         margin-left: auto;
         padding-right: 15px;

@@ -93,7 +93,6 @@ const ModelScanner = {
 
       errorSound.play();
       this.error = true;
-      this.select();
       this.$emit('error', this.barcode);
     },
     selectSerial() {
@@ -131,14 +130,18 @@ const ModelScanner = {
       this.errorSerial = false;
       this.select();
     },
-    resetSerial() {},
+    resetSerial() {
+      this.serial = '';
+      this.serialScanned = false;
+      this.selectSerial();
+    },
   },
   created() {
     this.$eventHub.$on('resetBarcode', () => {
       this.resetBarcode(false);
     });
     this.$eventHub.$on('resetSerial', () => {
-      this.resetSerial(false);
+      this.resetSerial();
     });
   },
   mounted() {
@@ -157,7 +160,8 @@ export default ModelScanner;
 <style>
   h2 {
     color: firebrick;
-    font-size: 50px;
+    font-size: 73px;
+    letter-spacing: 3px;
     font-weight: bold;
     font-family: Arial;
   }

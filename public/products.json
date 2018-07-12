@@ -1,7 +1,6 @@
 [
     {
         "index": 1,
-        "startOver": false,
         "model": "LPPM3I",
         "parts": [
             {
@@ -48,7 +47,6 @@
     },
     {
         "index": 2,
-        "startOver": false,
         "model": "LPPM3",
         "parts": [
             {

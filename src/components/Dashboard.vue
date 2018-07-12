@@ -62,6 +62,7 @@
             resetAssembly() {
                 this.assembly = {};
                 this.$eventHub.$emit('resetBarcode');
+                this.$eventHub.$emit('resetSerial');
             },
             enterPartModel(index) {
                 const foundPart = this.parts.find(p => p.id === this.partModels[index]);
@@ -100,10 +101,7 @@
                 document.querySelector(`#part-model-input${index}`).select();
             },
             resetPage() {
-                // noinspection JSUnresolvedVariable
-                if (this.assembly.startOver) {
-                    this.resetAssembly();
-                }
+                this.resetAssembly();
             },
         },
         created() {
