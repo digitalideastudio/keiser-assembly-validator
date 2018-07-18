@@ -121,7 +121,7 @@ const ModelScanner = {
     },
     enterSerial() {
       this.scannedSerial = true;
-      const re = RegExp(/^[0-9]+-[0-9]+$/);
+      const re = /^[0-9]+-[0-9]+$/;
       if (!re.test(this.serial)) {
         errorSound.play();
         this.errorSerial = true;
