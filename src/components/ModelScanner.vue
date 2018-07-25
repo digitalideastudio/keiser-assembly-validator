@@ -1,8 +1,8 @@
 <template>
   <div class="ModelScanner">
-    <h2 v-if="serial && scannedSerial && !errorSerial">{{ serial }}</h2>
+    <h2 v-if="serial && serialScanned && !errorSerial">{{ serial }}</h2>
     <div class="page-title"><span class="user-name" v-text="currentUser.name"></span>,
-      please scan a <span class="scan-label" v-if="serial && scannedSerial && !errorSerial">product model</span>
+      please scan a <span class="scan-label" v-if="serial && serialScanned && !errorSerial">product model</span>
       <span v-else>serial number</span>
     </div>
 
@@ -10,9 +10,9 @@
       ref="serial"
       autofocus
       class="input-serial"
-      :class="{ 'invalid': scannedSerial && errorSerial, 'valid': scannedSerial && !errorSerial }"
+      :class="{ 'invalid': serialScanned && errorSerial, 'valid': serialScanned && !errorSerial }"
       placeholder="Serial number"
-      :prefix-icon="scannedSerial ? 'fa-times' : null"
+      :prefix-icon="serialScanned ? 'fa-times' : null"
       v-model="serial"
       @keydown.enter.prevent.native="enterSerial"
       @keydown.esc.prevent.native="resetSerial"
@@ -23,7 +23,7 @@
     </el-input>
 
     <el-input
-      v-if="serial && scannedSerial && !errorSerial"
+      v-if="showBarcodeCondition"
       ref="barcode"
       class="input-barcode"
       :class="{ 'invalid': scanned && error, 'valid': scanned && !error }"
@@ -51,6 +51,7 @@ const errorSound = new Howl({
 
 const ModelScanner = {
   name: 'model-scanner',
+
   props: {
     products: {
       type: Array,
@@ -58,16 +59,21 @@ const ModelScanner = {
       default: [],
     },
   },
+
   computed: {
     ...mapGetters([
       'currentUser',
       'currentUserLoaded',
     ]),
+    showBarcodeCondition() {
+      return !!(this.serial && this.serialScanned && !this.errorSerial);
+    },
   },
+
   data() {
     return {
       scanned: false,
-      scannedSerial: false,
+      serialScanned: false,
       barcode: '',
       serial: '',
       error: false,
@@ -77,6 +83,7 @@ const ModelScanner = {
   },
   methods: {
     enterBarcode() {
+      console.info('enterBarcode');
       this.scanned = true;
       this.$emit('scan', this.barcode);
 
@@ -94,10 +101,12 @@ const ModelScanner = {
       errorSound.play();
       this.error = true;
       this.$emit('error', this.barcode);
+      this.select();
     },
     selectSerial() {
       this.$nextTick(() => {
         if (this.$refs.serial) {
+          console.info('Focusing the serial field.');
           this.$refs.serial.$el.querySelector('input').select();
         }
       });
@@ -105,11 +114,13 @@ const ModelScanner = {
     select() {
       this.$nextTick(() => {
         if (this.$refs.barcode) {
+          console.log('Focusing the barcode field.');
           this.$refs.barcode.$el.querySelector('input').select();
         }
       });
     },
     resetBarcode(emitEvent = true) {
+      console.info('resetBarcode');
       this.barcode = '';
       this.scanned = false;
       this.assembly = {};
@@ -120,23 +131,36 @@ const ModelScanner = {
       }
     },
     enterSerial() {
-      this.scannedSerial = true;
+      console.group('enterSerial');
+      this.serialScanned = true;
       const re = /^[0-9]+-[0-9]+$/;
+      console.log('RegExp', re);
+      console.log('Serial', this.serial);
+      console.log('Matched', re.test(this.serial));
+
       if (!re.test(this.serial)) {
         errorSound.play();
         this.errorSerial = true;
         this.selectSerial();
         this.$emit('error', this.serial);
+        console.groupEnd();
         return;
       }
 
-      this.$emit('scanSerial', this.serial);
       this.errorSerial = false;
+      this.$emit('scanSerial', this.serial);
+
+      console.log('serialScanned', this.serialScanned);
+      console.log('hasError', this.errorSerial);
+      console.log('Display condition', this.showBarcodeCondition);
       this.select();
+      console.groupEnd();
     },
     resetSerial() {
+      console.info('resetSerial');
       this.serial = '';
       this.serialScanned = false;
+      this.errorSerial = false;
       this.selectSerial();
     },
   },
@@ -152,12 +176,6 @@ const ModelScanner = {
     if (this.$refs.serial) {
       this.$refs.serial.$el.querySelector('input').select();
     }
-  },
-  watch: {
-    serial() {
-      this.serialScanned = false;
-      this.scannedSerial = false;
-    },
   },
 };
 export default ModelScanner;
