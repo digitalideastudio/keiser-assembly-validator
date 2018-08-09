@@ -42,7 +42,7 @@
 
 <script>
 import { Howl } from 'howler';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 const errorSound = new Howl({
   src: ['/sound/error.webm', '/sound/error.mp3'],
@@ -82,6 +82,9 @@ const ModelScanner = {
     };
   },
   methods: {
+    ...mapActions([
+      'saveSerial',
+    ]),
     enterBarcode() {
       console.info('enterBarcode');
       this.scanned = true;
@@ -154,6 +157,7 @@ const ModelScanner = {
       console.log('hasError', this.errorSerial);
       console.log('Display condition', this.showBarcodeCondition);
       this.select();
+      this.saveSerial(this.serial);
       console.groupEnd();
     },
     resetSerial() {
