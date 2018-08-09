@@ -63,6 +63,11 @@ const successSound = new Howl({
   volume: 0.5,
 });
 
+const assemblySuccessSound = new Howl({
+  src: ['/sound/assembly_success.webm', '/sound/assembly_success.mp3'],
+  volume: 0.5,
+});
+
 const PartsChecklist = {
   name: 'parts-checklist',
   props: {
@@ -171,6 +176,7 @@ const PartsChecklist = {
       this.$set(currentPart, 'success', true);
       this.$nextTick(() => {
         if (index === this.checklist.length - 1) {
+          successSound.play();
           this.showSerialConfirmation = true;
           this.$nextTick(() => {
             this.$refs.serial.select();
@@ -192,7 +198,7 @@ const PartsChecklist = {
       return '';
     },
     complete() {
-      successSound.play();
+      assemblySuccessSound.play();
       this.$emit('complete');
       swal({
         title: 'Great job',
