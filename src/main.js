@@ -6,6 +6,8 @@ import Element from 'element-ui';
 import App from './App';
 import router from './router';
 import store from './store';
+import './registerServiceWorker';
+import { createProvider } from './vue-apollo';
 
 require('sweetalert');
 
@@ -17,5 +19,6 @@ Vue.prototype.$eventHub = new Vue();
 new Vue({
   router,
   store,
-  render: h => h(App)
+  apolloProvider: createProvider(),
+  render: h => h(App),
 }).$mount('#app');
