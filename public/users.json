@@ -21,8 +21,8 @@
     },
     {
         "index": 5,
-        "id": "C1V",
-        "name": "Chung Vue"
+        "id": "X1V",
+        "name": "Xue Vang"
     },
     {
         "index": 6,
@@ -31,18 +31,18 @@
     },
     {
         "index": 7,
-        "id": "T1C",
-        "name": "Terry Chance"
+        "id": "C1X",
+        "name": "Cheemeng Xiong"
     },
     {
         "index": 8,
-        "id": "C1C",
-        "name": "Chris Chance"
+        "id": "L1N",
+        "name": "Lusia Nuno"
     },
     {
         "index": 9,
-        "id": "S1C",
-        "name": "Syji Carter"
+        "id": "J1L",
+        "name": "Jovanny Legaria"
     },
     {
         "index": 10,
@@ -51,8 +51,8 @@
     },
     {
         "index": 11,
-        "id": "D1A",
-        "name": "Daniel Anaya"
+        "id": "A1Z",
+        "name": "Abraham Zamora"
     },
     {
         "index": 12,
@@ -81,8 +81,8 @@
     },
     {
         "index": 17,
-        "id": "K1R",
-        "name": "Kerry Rin"
+        "id": "J2V",
+        "name": "Jesse Vang"
     },
     {
         "index": 18,
@@ -102,22 +102,32 @@
     },
     {
         "index": 21,
-        "id": "K1M",
-        "name": "Kristie Mendez"
+        "id": "L1C",
+        "name": "Levi De La Cruz"
     },
     {
         "index": 22,
-        "id": "J2V",
-        "name": "Jae  Vue"
+        "id": "I1P",
+        "name": "Ivan Paderez"
     },
     {
         "index": 23,
-        "id": "S1Y",
-        "name": "Sony Yang"
+        "id": "J1R",
+        "name": "Joel Rodriguez"
     },
     {
         "index": 24,
-        "id": "R1C",
-        "name": "Richard Cha"
+        "id": "T1L",
+        "name": "Thomas Leon"
+    },
+    {
+        "index": 25,
+        "id": "J1A",
+        "name": "Javier Avila"
+    },
+    {
+        "index": 26,
+        "id": "K1X",
+        "name": "Kou Xiong"
     }
 ]
