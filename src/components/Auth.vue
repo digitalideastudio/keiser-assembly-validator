@@ -18,10 +18,6 @@
         components: {
             UserScanner,
         },
-        data() {
-            return {
-            };
-        },
         computed: {
             ...mapGetters([
                 'users',
