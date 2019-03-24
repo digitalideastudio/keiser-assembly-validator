@@ -18,10 +18,11 @@
         <div>
           <!--suppress JSUnresolvedVariable -->
           <el-input
-            size="small"
+            v-model="inputParts[index]"
             :ref="`inputs${index}`"
             :placeholder="part.id"
             :prefix-icon="getPartIcon(part)"
+            size="small"
             @keydown.enter.native="validatePart(index, part, $event)"
           ></el-input>
         </div>
@@ -52,6 +53,7 @@
 import swal from 'sweetalert';
 import { mapGetters } from 'vuex';
 import { Howl } from 'howler';
+import { ASSEMBLY_OK, PART_DUPLICATE, PART_INVALID, PART_OK, SERIAL_ERROR, SERIAL_OK } from '../store/constants';
 
 const errorSound = new Howl({
   src: ['/sound/error.webm', '/sound/error.mp3'],
@@ -83,6 +85,7 @@ const PartsChecklist = {
       serialConfirmation: '',
       snScanned: false,
       snError: false,
+      inputParts: [],
     };
   },
   computed: {
@@ -94,10 +97,12 @@ const PartsChecklist = {
     enterSerial() {
       this.snScanned = true;
       if (this.serial === this.serialConfirmation) {
+        this.logAction([SERIAL_OK, this.serial]);
         this.snError = false;
         this.complete();
         return;
       }
+      this.logAction([SERIAL_ERROR, this.serial]);
       this.snError = true;
       this.$nextTick(() => {
         swal({
@@ -115,7 +120,7 @@ const PartsChecklist = {
       this.snError = false;
     },
     validatePart(index, currentPart, $event) {
-      const enteredId = $event.srcElement.value;
+      const enteredId = this.inputParts[index];
       const expectedPart = this.checklist[index];
       const expectedId = expectedPart.id;
       const isValidPosition = enteredId === expectedId;
@@ -130,6 +135,7 @@ const PartsChecklist = {
       this.$set(currentPart, 'success', false);
 
       if (!isExistsInChecklist) {
+        this.logAction([PART_INVALID, enteredId]);
         errorSound.play();
         this.$set(currentPart, 'error', true);
         this.$nextTick(() => {
@@ -145,6 +151,7 @@ const PartsChecklist = {
       }
 
       if (partsCountScanned >= partsCountNeeded) {
+        this.logAction([PART_DUPLICATE, enteredId]);
         errorSound.play();
         this.$set(currentPart, 'error', true);
         this.$nextTick(() => {
@@ -183,6 +190,7 @@ const PartsChecklist = {
           });
           return;
         }
+        this.logAction([PART_OK, enteredId]);
         this.$refs[`inputs${index + 1}`][0].$el.querySelector('input').select();
       });
     },
@@ -198,6 +206,7 @@ const PartsChecklist = {
       return '';
     },
     complete() {
+      this.logAction([ASSEMBLY_OK]);
       assemblySuccessSound.play();
       this.$emit('complete');
       swal({

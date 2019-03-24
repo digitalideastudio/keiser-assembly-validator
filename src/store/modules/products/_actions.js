@@ -1,11 +1,25 @@
-import axios from 'axios';
+import apolloProvider from '@/apolloProvider';
+import gql from 'graphql-tag';
 
 export default {
-    setProducts({ commit }, productUrl) {
-        return axios.get(productUrl)
-            .then(({ data }) => {
-                data = typeof data === 'string' ? JSON.parse(data) : data; // eslint-disable-line no-param-reassign
-                commit('setProducts', data);
-            });
-    },
+  async fetchProducts({ commit }) {
+    const { data: { fetchProducts }} = await apolloProvider.defaultClient.query({
+      query: gql`
+        query fetchProducts {
+          fetchProducts {
+            index
+            startOver
+            model
+            parts {
+              index
+              id
+              description
+            }
+          }
+        }
+      `,
+    });
+
+    commit('setProducts', fetchProducts);
+  },
 };

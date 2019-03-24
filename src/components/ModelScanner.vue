@@ -1,7 +1,7 @@
 <template>
   <div class="ModelScanner">
     <h2 v-if="serial && serialScanned && !errorSerial">{{ serial }}</h2>
-    <div class="page-title"><span class="user-name" v-text="currentUser.name"></span>,
+    <div class="page-title"><span class="user-name" v-text="user.name"></span>,
       please scan a <span class="scan-label" v-if="serial && serialScanned && !errorSerial">product model</span>
       <span v-else>serial number</span>
     </div>
@@ -43,6 +43,7 @@
 <script>
 import { Howl } from 'howler';
 import { mapGetters, mapActions } from 'vuex';
+import { SERIAL_ERROR, MODEL_ERROR, MODEL_OK, SERIAL_OK } from '../store/constants';
 
 const errorSound = new Howl({
   src: ['/sound/error.webm', '/sound/error.mp3'],
@@ -61,9 +62,9 @@ const ModelScanner = {
   },
 
   computed: {
-    ...mapGetters([
-      'currentUser',
-      'currentUserLoaded',
+    ...mapGetters('user', [
+      'user',
+      'userLoaded',
     ]),
     showBarcodeCondition() {
       return !!(this.serial && this.serialScanned && !this.errorSerial);
@@ -85,6 +86,9 @@ const ModelScanner = {
     ...mapActions([
       'saveSerial',
     ]),
+    ...mapActions('user', [
+      'logAction',
+    ]),
     enterBarcode() {
       console.info('enterBarcode');
       this.scanned = true;
@@ -98,9 +102,11 @@ const ModelScanner = {
         this.$nextTick(() => {
           this.$emit('found', this.assembly);
         });
+        this.logAction([MODEL_OK, this.barcode]);
         return;
       }
 
+      this.logAction([MODEL_ERROR, this.barcode]);
       errorSound.play();
       this.error = true;
       this.$emit('error', this.barcode);
@@ -142,6 +148,7 @@ const ModelScanner = {
       console.log('Matched', re.test(this.serial));
 
       if (!re.test(this.serial)) {
+        this.logAction([SERIAL_ERROR, this.serial]);
         errorSound.play();
         this.errorSerial = true;
         this.selectSerial();
@@ -150,6 +157,7 @@ const ModelScanner = {
         return;
       }
 
+      this.logAction([SERIAL_OK, this.serial]);
       this.errorSerial = false;
       this.$emit('scanSerial', this.serial);
 

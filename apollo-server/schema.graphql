@@ -1,21 +1,42 @@
-# Included scalars
-scalar JSON
-scalar Upload
+type Part {
+  index: Int!
+  id: String!
+  description: String!
+}
 
+type Product {
+  index: Int!
+  startOver: Boolean
+  model: String!
+  parts: [Part!]!
+}
 
+type User {
+  index: Int!
+  id: String!
+  name: String!
+}
 
 type Query {
-  # Test query with a parameter
-  hello(name: String): String!
+  fetchUser(id: String!): User
+  fetchProducts: [Product!]!
+}
 
+enum LogAction {
+  AUTH_OK
+  AUTH_ERROR
+  AUTH_LOGOUT
+  SERIAL_OK
+  SERIAL_ERROR
+  MODEL_OK
+  MODEL_ERROR
+  PART_OK
+  PART_INVALID
+  PART_DUPLICATE
+  ASSEMBLY_OK
+  ASSEMBLY_ERROR
 }
 
 type Mutation {
-  myMutation: String!
-
-}
-
-type Subscription {
-  mySub: String!
-
+  logAction(userId: String, action: LogAction!, payload: String!): Boolean
 }

@@ -14,4 +14,6 @@ $fa-font-path: '~font-awesome/fonts';
   -moz-osx-font-smoothing: grayscale;
 };
 
-
+.el-input--prefix .el-input__inner {
+  padding-left: 15px !important;
+}
