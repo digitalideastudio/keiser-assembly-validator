@@ -22,7 +22,8 @@
     "vue": "^2.6.10",
     "vue-apollo": "^3.0.0-beta.28",
     "vue-router": "^3.0.2",
-    "vuex": "^3.1.0"
+    "vuex": "^3.1.0",
+    "moment": "latest"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.1",
@@ -32,8 +33,6 @@
     "eslint-plugin-graphql": "^3.0.3",
     "graphql-tag": "^2.10.1",
     "lint-staged": "^8.1.5",
-    "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue-cli-plugin-apollo": "^0.19.2",

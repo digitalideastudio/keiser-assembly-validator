@@ -1,3 +1,18 @@
+enum LogActionType {
+  AUTH_OK
+  AUTH_ERROR
+  AUTH_LOGOUT
+  SERIAL_OK
+  SERIAL_ERROR
+  SERIAL_CONFIRM_OK
+  SERIAL_CONFIRM_ERROR
+  MODEL_OK
+  MODEL_ERROR
+#  PART_OK
+  PART_INVALID_ERROR
+  PART_DUPLICATE_ERROR
+}
+
 type Part {
   index: Int!
   id: String!
@@ -5,38 +20,36 @@ type Part {
 }
 
 type Product {
-  index: Int!
+  id: Int!
   startOver: Boolean
   model: String!
   parts: [Part!]!
 }
 
 type User {
-  index: Int!
-  id: String!
+  id: Int!
+  code: String!
   name: String!
 }
 
-type Query {
-  fetchUser(id: String!): User
-  fetchProducts: [Product!]!
+type LogAction {
+  id: Int!
+  userName: String!
+  action: LogActionType!
+  payload: String!
+  createdAt: String!
 }
 
-enum LogAction {
-  AUTH_OK
-  AUTH_ERROR
-  AUTH_LOGOUT
-  SERIAL_OK
-  SERIAL_ERROR
-  MODEL_OK
-  MODEL_ERROR
-  PART_OK
-  PART_INVALID
-  PART_DUPLICATE
-  ASSEMBLY_OK
-  ASSEMBLY_ERROR
+type Query {
+  fetchUser(code: String!): User
+  fetchProducts: [Product!]!
+  logActions(dateFrom: String!, dateTo: String!): [LogAction!]!
 }
 
 type Mutation {
-  logAction(userId: String, action: LogAction!, payload: String!): Boolean
+  logAction(userCode: String, action: LogActionType!, payload: String!): LogAction!
+}
+
+type Subscription {
+  logActionAdded: LogAction!
 }

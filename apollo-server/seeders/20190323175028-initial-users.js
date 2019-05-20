@@ -3,10 +3,10 @@ const users = require('../data/users');
 
 module.exports = {
   up: (queryInterface) => {
-    return queryInterface.bulkInsert('Users', users, {});
+    return queryInterface.bulkInsert('users', users, {});
   },
 
   down: (queryInterface) => {
-    return queryInterface.bulkDelete('Users', null, {});
+    return queryInterface.bulkDelete('users', null, {});
   },
 };

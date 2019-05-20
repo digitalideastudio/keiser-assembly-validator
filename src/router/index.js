@@ -24,5 +24,10 @@ export default new Router({
       name: 'Dashboard',
       component: () => import('@/components/AppDashboard'),
     },
+    {
+      path: '/action_log',
+      name: 'ActionLog',
+      component: () => import('@/components/ActionLog'),
+    }
   ],
 });

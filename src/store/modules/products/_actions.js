@@ -7,7 +7,7 @@ export default {
       query: gql`
         query fetchProducts {
           fetchProducts {
-            index
+            id
             startOver
             model
             parts {

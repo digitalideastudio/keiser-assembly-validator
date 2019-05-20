@@ -1,9 +1,9 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('Product', {
-    model: DataTypes.STRING,
-    startOver: DataTypes.BOOLEAN,
-    parts: DataTypes.JSON,
+  return sequelize.define('LogAction', {
+    userName: DataTypes.STRING,
+    action: DataTypes.STRING,
+    payload: DataTypes.STRING,
     createdAt: {
       allowNull: false,
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
@@ -15,6 +15,6 @@ module.exports = (sequelize, DataTypes) => {
       type: 'TIMESTAMP',
     },
   }, {
-    tableName: 'products',
+    tableName: 'log_actions',
   });
 };

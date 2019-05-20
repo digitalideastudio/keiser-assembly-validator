@@ -1,11 +1,20 @@
 'use strict';
+
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+  return sequelize.define('User', {
     code: DataTypes.STRING,
     name: DataTypes.STRING,
-  }, {});
-  User.associate = function(models) {
-    // associations can be defined here
-  };
-  return User;
+    createdAt: {
+      allowNull: false,
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+      type: 'TIMESTAMP',
+    },
+    updatedAt: {
+      allowNull: false,
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+      type: 'TIMESTAMP',
+    },
+  }, {
+    tableName: 'users',
+  });
 };

@@ -1,0 +1,7 @@
+#import "./LogAction.graphql"
+
+query logActions($dateFrom: String!, $dateTo: String!) {
+  logActions(dateFrom: $dateFrom, dateTo: $dateTo) {
+    ...LogAction
+  }
+}

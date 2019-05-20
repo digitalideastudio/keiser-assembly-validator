@@ -3,19 +3,19 @@ import apolloProvider from '@/apolloProvider';
 import store from '@/store';
 
 export default {
-  async fetchUser({ commit }, id) {
+  async fetchUser({ commit }, code) {
     return apolloProvider.defaultClient.query({
       query: gql`
-        query fetchUser($id: String!) {
-          fetchUser(id: $id) {
-            index
+        query fetchUser($code: String!) {
+          fetchUser(code: $code) {
             id
+            code
             name
           }
         }
       `,
       variables: {
-        id,
+        code,
       }
     }).then(({ data: { fetchUser }}) => {
       if (fetchUser) {
@@ -27,14 +27,16 @@ export default {
   async logAction(_, [action, payload]) {
     await apolloProvider.defaultClient.mutate({
       mutation: gql`
-        mutation logAction($userId: String, $action: LogAction!, $payload: String!) {
-          logAction(userId: $userId, action: $action, payload: $payload)
+        mutation logAction($userCode: String, $action: LogActionType!, $payload: String!) {
+          logAction(userCode: $userCode, action: $action, payload: $payload) {
+            id
+          }
         },
       `,
       variables: {
-        userId: (store.getters['user/user'] || {}).id || '',
+        userCode: (store.getters['user/user'] || {}).code || '',
         action,
-        payload: JSON.stringify(payload),
+        payload,
       }
     });
   }

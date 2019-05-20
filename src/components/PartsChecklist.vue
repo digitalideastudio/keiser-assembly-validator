@@ -51,9 +51,9 @@
 
 <script>
 import swal from 'sweetalert';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import { Howl } from 'howler';
-import { ASSEMBLY_OK, PART_DUPLICATE, PART_INVALID, PART_OK, SERIAL_ERROR, SERIAL_OK } from '../store/constants';
+import { PART_DUPLICATE_ERROR, PART_INVALID_ERROR, SERIAL_CONFIRM_ERROR, SERIAL_CONFIRM_OK } from '../store/constants';
 
 const errorSound = new Howl({
   src: ['/sound/error.webm', '/sound/error.mp3'],
@@ -94,15 +94,18 @@ const PartsChecklist = {
     ]),
   },
   methods: {
+    ...mapActions('user', [
+      'logAction',
+    ]),
     enterSerial() {
       this.snScanned = true;
       if (this.serial === this.serialConfirmation) {
-        this.logAction([SERIAL_OK, this.serial]);
+        this.logAction([SERIAL_CONFIRM_OK, this.serial]);
         this.snError = false;
         this.complete();
         return;
       }
-      this.logAction([SERIAL_ERROR, this.serial]);
+      this.logAction([SERIAL_CONFIRM_ERROR, this.serial]);
       this.snError = true;
       this.$nextTick(() => {
         swal({
@@ -135,7 +138,7 @@ const PartsChecklist = {
       this.$set(currentPart, 'success', false);
 
       if (!isExistsInChecklist) {
-        this.logAction([PART_INVALID, enteredId]);
+        this.logAction([PART_INVALID_ERROR, enteredId]);
         errorSound.play();
         this.$set(currentPart, 'error', true);
         this.$nextTick(() => {
@@ -151,7 +154,7 @@ const PartsChecklist = {
       }
 
       if (partsCountScanned >= partsCountNeeded) {
-        this.logAction([PART_DUPLICATE, enteredId]);
+        this.logAction([PART_DUPLICATE_ERROR, enteredId]);
         errorSound.play();
         this.$set(currentPart, 'error', true);
         this.$nextTick(() => {
@@ -190,7 +193,7 @@ const PartsChecklist = {
           });
           return;
         }
-        this.logAction([PART_OK, enteredId]);
+        // this.logAction([PART_OK, enteredId]);
         this.$refs[`inputs${index + 1}`][0].$el.querySelector('input').select();
       });
     },
@@ -206,7 +209,7 @@ const PartsChecklist = {
       return '';
     },
     complete() {
-      this.logAction([ASSEMBLY_OK]);
+      // this.logAction([SERIAL_CONFIRM_OK, '']);
       assemblySuccessSound.play();
       this.$emit('complete');
       swal({

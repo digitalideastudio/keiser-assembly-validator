@@ -1,0 +1,7 @@
+#import "./LogAction.graphql"
+
+subscription logActionAdded {
+  logActionAdded {
+    ...LogAction
+  }
+}

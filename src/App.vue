@@ -40,8 +40,6 @@
         margin-top: 100px;
         margin-right: auto;
         margin-left: auto;
-        padding-right: 15px;
-        padding-left: 15px;
         width: 100%;
         max-width: 1910px;
     }
@@ -59,6 +57,6 @@
     }
 </style>
 
-<style lang="scss">
-    @import 'scss/main.scss';
+<style lang="stylus">
+    @import 'styles/main.styl';
 </style>

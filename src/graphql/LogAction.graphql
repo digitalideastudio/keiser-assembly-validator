@@ -1,0 +1,8 @@
+fragment LogAction on LogAction {
+  id
+  userName
+  action
+  payload
+  createdAt
+  __typename
+}
